@@ -95,9 +95,9 @@ app.listen(port, () => {
 });
 
 // Schedule the task to run daily at midnight
-cron.schedule('0 0 * * *', () => {
+cron.schedule('* * * * *', () => {
     console.log('Running scheduled task to fetch PDFs from S3 and store in MongoDB...');
-    fetchAndProcessPdfs();
+    // fetchAndProcessPdfs();
 });
 
 // Start the cron job immediately for testing
