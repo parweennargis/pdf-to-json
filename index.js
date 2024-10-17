@@ -45,7 +45,7 @@ async function fetchAndProcessPdfs() {
             // check if file exist with the date
             const fileExist = await collection.findOne({
                 fileName: file.Key,
-                lastModified: file.LastModified
+                createdAt: file.LastModified
             });
             if (!fileExist) {
                 // Get the PDF file from S3
@@ -60,9 +60,10 @@ async function fetchAndProcessPdfs() {
                 
                 // Prepare the JSON object
                 const jsonData = {
+                    patientId: file.Key.split(".")[0],
                     fileName: file.Key,
                     content: pdfText.text,
-                    lastModified: file.LastModified,
+                    createdAt: file.LastModified,
                 };
 
                 // Insert JSON data into MongoDB
@@ -102,6 +103,3 @@ cron.schedule('* * * * *', () => {
 
 // Start the cron job immediately for testing
 // fetchAndProcessPdfs();
-
- // Export the app for Vercel
- module.exports = app;
